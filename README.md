@@ -2,6 +2,7 @@
 
 [![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/main/README_RU.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
+[![Releases](https://shields.io/github/v/release/sozooo/game-state-machine.svg)](https://github.com/sozooo/game-state-machine/releases)
 
 Dependencies:
 * [VContainer](https://github.com/hadashiA/VContainer)
@@ -12,6 +13,7 @@ Dependencies:
 - [Installation](#installation)
   - [Install via git URL](#install-via-git-url)
   - [Install via manifest](#install-via-manifest)
+  - [Install via Unity Package](#install-via-unity-package)
 - [Getting Started](#getting-started)
 - [Simple States](#simple-states)
 - [Changing States](#changing-states)
@@ -26,6 +28,9 @@ Requires a version of unity that supports path query parameter for git packages 
 
 ## Install via manifest
 Add `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` to `Packages/manifest.json`
+
+## Install via Unity Package
+Download `.unitypackage` file of the latest version in [Releases](https://github.com/sozooo/game-state-machine/releases) and import it as regular unity package into the project
 
 Getting Started
 ---

@@ -2,10 +2,21 @@
 
 [![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/main/README.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
+[![Releases](https://shields.io/github/v/release/sozooo/game-state-machine.svg)](https://github.com/sozooo/game-state-machine/releases)
 
 Зависимости:
 * [VContainer](https://github.com/hadashiA/VContainer)
 * [C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise) (уже установлено в пакет)
+
+## Содержание
+
+- [Установка](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0)
+  - [Установка через git URL](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-git-URL)
+  - [Установка через manifest](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-manifest)
+  - [Установка через Unity Package](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-unity-package)
+- [Начало работы](#%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B)
+- [Простые состояния](#%D0%9F%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%B5-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F)
+- [Смена состояний](#%D0%A1%D0%BC%D0%B5%D0%BD%D0%B0-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B9)
 
 Установка
 ---
@@ -18,6 +29,9 @@ Be sure VContainer is installed and VContainer assembly definition is exist
 
 ## Установка через manifest
 Добавьте `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` в `Packages/manifest.json`
+
+## Установка через Unity Package
+Загрузите файл `.unitypackage`последней версии в [Releases](https://github.com/sozooo/game-state-machine/releases) и импортируйте, как обычный пакет Unity в проект
 
 Начало работы
 ---
