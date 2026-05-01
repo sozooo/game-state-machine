@@ -1,6 +1,6 @@
 # Game State Machine
 
-[![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README.md)
+[![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/tree/master/README.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
 
 Зависимости:
@@ -153,7 +153,7 @@ public class EndOfFrameExitState : IState, IUpdateable
         _exitPromise?.Resolve();
 }
 ```
-Можно посмотреть [Примеры](https://github.com/sozooo/game-state-machine/blob/master/Examples~/) распространенных состояний и их связей
+Можно посмотреть [Примеры](https://github.com/sozooo/game-state-machine/tree/main/Examples~) распространенных состояний и их связей
 
 Смена состояний
 ---

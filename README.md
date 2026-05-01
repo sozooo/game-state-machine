@@ -1,6 +1,6 @@
 # Game State Machine
 
-[![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README_RU.md)
+[![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/tree/master/README_RU.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
 
 Dependencies:
@@ -161,7 +161,7 @@ public class EndOfFrameExitState : IState, IUpdateable
         _exitPromise?.Resolve();
 }
 ```
-See [Examples](https://github.com/sozooo/game-state-machine/blob/master/Examples~/) of common states and their connections
+See [Examples](https://github.com/sozooo/game-state-machine/tree/main/Examples~) of common states and their connections
 
 Changing States
 ---
