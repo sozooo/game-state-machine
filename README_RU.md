@@ -1,6 +1,6 @@
 # Game State Machine
 
-[![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README.md)
+[![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/main/README.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
 
 Зависимости:
