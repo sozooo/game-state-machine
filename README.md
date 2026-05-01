@@ -1,6 +1,6 @@
 # Game State Machine
 
-[![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/tree/master/README_RU.md)
+[![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README_RU.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
 
 Dependencies:
