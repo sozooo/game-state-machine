@@ -26,6 +26,9 @@ Be sure VContainer is installed and VContainer assembly definition is exist
 
 ## Установка через git URL
 Необходима версия Unity, которая поддерживает query параметры для пакетов git (Unity >= 2019.3.4f1, Unity >= 2020.1a21). Можно добавить `https://github.com/sozooo/game-state-machine.git` в Package Manager
+<img width="417" height="169" alt="image" src="https://github.com/user-attachments/assets/c07450b5-cf4b-45f2-a806-4cf904c53728" />
+
+<img width="418" height="171" alt="image" src="https://github.com/user-attachments/assets/c4906006-0943-431a-8122-71b95e0058ce" />
 
 ## Установка через manifest
 Добавьте `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` в `Packages/manifest.json`
