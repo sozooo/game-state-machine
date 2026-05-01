@@ -1,0 +1,22 @@
+# IDE
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.user
+*.unityproj
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Unity
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+
+# Build
+Build/
+Builds/

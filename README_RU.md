@@ -1,36 +1,28 @@
 # Game State Machine
 
-[![Readme_RU](https://img.shields.io/badge/GSM-RU-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README_RU.md)
+[![Readme](https://img.shields.io/badge/GSM-EN-8A2BE2?logo=github)](https://github.com/sozooo/game-state-machine/blob/master/README.md)
 ![](https://img.shields.io/badge/unity-2022.3+-000.svg)
 
-Dependencies:
+Зависимости:
 * [VContainer](https://github.com/hadashiA/VContainer)
-* [C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise) (already implemented)
+* [C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise) (уже установлено в пакет)
 
-## Table of Contents
-
-- [Installation](#installation)
-  - [Install via git URL](#install-via-git-url)
-  - [Install via manifest](#install-via-manifest)
-- [Getting Started](#getting-started)
-- [Simple States](#simple-states)
-- [Changing States](#changing-states)
-
-Installation
+Установка
 ---
 
 Be sure VContainer is installed and VContainer assembly definition is exist
+Убедитесь, что VContainer установлен и assembly VContainer существует в проекте
 
-## Install via git URL
-Requires a version of unity that supports path query parameter for git packages (Unity >= 2019.3.4f1, Unity >= 2020.1a21). You can add `https://github.com/sozooo/game-state-machine.git` to Package Manager
+## Установка через git URL
+Необходима версия Unity, которая поддерживает query параметры для пакетов git (Unity >= 2019.3.4f1, Unity >= 2020.1a21). Можно добавить `https://github.com/sozooo/game-state-machine.git` в Package Manager
 
-## Install via manifest
-Add `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` to `Packages/manifest.json`
+## Установка через manifest
+Добавьте `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` в `Packages/manifest.json`
 
-Getting Started
+Начало работы
 ---
 
-To get started `GameStateMachine` and `StateFactory` classes must be registered into the container as implemented interfaces (IGameStateMachine)
+Перед началом `GameStateMachine` и `StateFactory` классы должны быть зарегистрированы в контейнер через реализуемые интерфейсы (IGameStateMachine)
 
 ```csharp
 private void RegisterGameStateMachine(IContainerBuilder builder)
@@ -40,7 +32,7 @@ private void RegisterGameStateMachine(IContainerBuilder builder)
 }
 ```
 
-And so do custom game states as self, example:
+Также и состояния, в качестве самих себя. Пример:
 
 ```csharp
 private void RegisterGameStates(IContainerBuilder builder)
@@ -58,10 +50,10 @@ private void RegisterGameStates(IContainerBuilder builder)
 }
 ```
 
-Simple States
+Простые состояния
 ---
 
-SimpleState is for states that don't need no payload or end of frame logic:
+SimpleState для состояний без загрузки или обработки последнего фрейма перед выходом.
 
 ```csharp
 public class SimpleState : IState
@@ -86,7 +78,7 @@ public class SimpleState : IState
 }
 ```
 
-SimplePayloadState is for states that need payload (for example, states that load scenes or modes)
+SimplePayloadState для состояний, которые требуют нагрузку (например, состояния которые загружают сцены или режимы).
 
 ```csharp
 public class SimplePayloadState<TPayload> : IPayloadState<TPayload>
@@ -111,7 +103,7 @@ public class SimplePayloadState<TPayload> : IPayloadState<TPayload>
 }
 ```
 
-EndOfFrameExitState is for states that need to process their exit in the end of a frame
+EndOfFrameExitState для состояний, которым нужно обработать конец фрейма перед выходом.
 
 ```csharp
 public class EndOfFrameExitState : IState, IUpdateable
@@ -161,15 +153,15 @@ public class EndOfFrameExitState : IState, IUpdateable
         _exitPromise?.Resolve();
 }
 ```
-See [Examples](https://github.com/sozooo/game-state-machine/blob/master/Examples~/) of common states and their connections
+Можно посмотреть [Примеры](https://github.com/sozooo/game-state-machine/blob/master/Examples~/) распространенных состояний и их связей
 
-Changing States
+Смена состояний
 ---
 
-To change state `IGameStateMachine` must be injected into the class. `Enter` method can be callled from state machine instance.
+Чтобы сменить состояние `IGameStateMachine` должна быть внедрена в класс. Метод `Enter` может быть вызван из экземпляра машины состояний.
 
 ```csharp
 _stateMachine.Enter<ENTER_STATE>();
 ```
 
-`Enter` method is generic; `ENTER_STATES` is needed state
+Метод `Enter` - дженерик; `ENTER_STATES` - необходимой состояние

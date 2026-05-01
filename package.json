@@ -1,0 +1,10 @@
+{
+  "name": "com.sozooo.game-state-machine",
+  "version": "1.0.0",
+  "displayName": "Game State Machine",
+  "description": "A package for managing game state transitions",
+  "unity": "2022.3",
+  "author": {
+    "name": "Ilya Korzhevoy"
+  }
+}
