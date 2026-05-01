@@ -25,6 +25,7 @@ Be sure VContainer is installed and VContainer assembly definition is exist
 
 ## Install via git URL
 Requires a version of unity that supports path query parameter for git packages (Unity >= 2019.3.4f1, Unity >= 2020.1a21). You can add `https://github.com/sozooo/game-state-machine.git` to Package Manager
+
 <img width="417" height="169" alt="image" src="https://github.com/user-attachments/assets/c07450b5-cf4b-45f2-a806-4cf904c53728" />
 
 <img width="418" height="171" alt="image" src="https://github.com/user-attachments/assets/c4906006-0943-431a-8122-71b95e0058ce" />
