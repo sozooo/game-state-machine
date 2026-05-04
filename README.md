@@ -24,9 +24,11 @@ Installation
 Be sure VContainer is installed and VContainer assembly definition is exist
 
 ## Install via git URL
-Requires a version of unity that supports path query parameter for git packages (Unity >= 2019.3.4f1, Unity >= 2020.1a21). You can add `https://github.com/sozooo/game-state-machine.git` to Package Manager
+Requires a version of unity that supports path query parameter for git packages (Unity >= 2019.3.4f1, Unity >= 2020.1a21). 
 
-<img width="417" height="169" alt="image" src="https://github.com/user-attachments/assets/c07450b5-cf4b-45f2-a806-4cf904c53728" />
+<img width="422" height="166" alt="image" src="https://github.com/user-attachments/assets/3836a472-1400-47a8-a31d-f162ac41b173" />
+
+You need to add `https://github.com/sozooo/game-state-machine.git` to Package Manager.
 
 <img width="418" height="171" alt="image" src="https://github.com/user-attachments/assets/c4906006-0943-431a-8122-71b95e0058ce" />
 
@@ -181,4 +183,42 @@ To change state `IGameStateMachine` must be injected into the class. `Enter` met
 _stateMachine.Enter<ENTER_STATE>();
 ```
 
-`Enter` method is generic; `ENTER_STATES` is needed state
+`Enter` method is generic; `ENTER_STATES` is needed state with interface `IState` implemented
+
+`Enter` method has overload with payload if `ENTER_PAYLOAD_STATE` is `IPayloadState<TPayload>` or `SimplePayloadState<TPayload>`
+
+```csharp
+_stateMachine.Enter<ENTER_PAYLOAD_STATE>(PAYLOAD)
+```
+
+`GameStateMachine` will request entering into the state. If there was an active state, machine will call `IExitableState.BeginExit()` and exit promise will create. When exit promise will be resolved, it'll call an `IExitableState.EndExit()` on active state. After that new state will be applied and `Enter` method in the needed state will be called.
+
+```csharp
+public void Enter<TState>() where TState : class, IState =>
+    RequestEnter<TState>()
+        .Done();
+
+private IPromise<TState> RequestEnter<TState>() where TState : class, IState =>
+    RequestChangeState<TState>()
+        .Then(EnterState);
+
+private IPromise<TState> RequestChangeState<TState>() where TState : class, IExitableState
+{
+    if (_activeState != null)
+    {
+        return _activeState
+            .BeginExit()
+            .Then(_activeState.EndExit)
+            .Then(ChangeState<TState>);
+    }
+      
+    return ChangeState<TState>();
+}
+
+private IPromise<TState> ChangeState<TState>() where TState : class, IExitableState
+{
+    TState state = _stateFactory.GetState<TState>();
+
+    return Promise<TState>.Resolved(state);
+}
+```
