@@ -188,7 +188,7 @@ _stateMachine.Enter<ENTER_STATE>();
 `Enter` method has overload with payload if `ENTER_PAYLOAD_STATE` is `IPayloadState<TPayload>` or `SimplePayloadState<TPayload>`
 
 ```csharp
-_stateMachine.Enter<ENTER_PAYLOAD_STATE>(PAYLOAD)
+_stateMachine.Enter<ENTER_PAYLOAD_STATE, TPayload>(TPayload PAYLOAD)
 ```
 
 `GameStateMachine` will request entering into the state. If there was an active state, machine will call `IExitableState.BeginExit()` and exit promise will create. When exit promise will be resolved, it'll call an `IExitableState.EndExit()` on active state. After that new state will be applied and `Enter` method in the needed state will be called.
