@@ -6,7 +6,7 @@ namespace Code.Infrastructure.States.GameStates
     public class BattleLoopState : EndOfFrameExitState
     {
         private readonly IGameStateMachine _stateMachine;
-        
+
         public BattleLoopState(IGameStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
@@ -21,14 +21,14 @@ namespace Code.Infrastructure.States.GameStates
         protected override void OnUpdate()
         {
             //base.OnUpdate(); is empty no need to implement
-            
+
             //UPDATE FEATURES
         }
 
         protected override void ExitOnEndOfFrame()
         {
             //base.ExitOnEndOfFrame(); is empty no need to implement
-            
+
             //CLOSE WINDOWS / CLEANUP / DEACTIVATE META
         }
     }

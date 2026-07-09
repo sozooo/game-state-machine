@@ -5,15 +5,14 @@
 [![Releases](https://shields.io/github/v/release/sozooo/game-state-machine.svg)](https://github.com/sozooo/game-state-machine/releases)
 
 Зависимости:
-* [VContainer](https://github.com/hadashiA/VContainer)
+* DI-контейнер (один из двух представленных):
+  * [VContainer](https://github.com/hadashiA/VContainer)
+  * [Zenject (Extenject)](https://github.com/undsoft/Extenject) (важно устанавливать его через [UPM или manifest.json](https://github.com/Mathijs-Bakker/Extenject/blob/master/README.md#installation-))
 * [C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise) (уже установлено в пакет)
 
 ## Содержание
 
 - [Установка](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0)
-  - [Установка через git URL](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-git-URL)
-  - [Установка через manifest](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-manifest)
-  - [Установка через Unity Package](#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-unity-package)
 - [Начало работы](#%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B)
 - [Простые состояния](#%D0%9F%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%B5-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F)
 - [Смена состояний](#%D0%A1%D0%BC%D0%B5%D0%BD%D0%B0-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B9)
@@ -21,59 +20,57 @@
 Установка
 ---
 
-Be sure VContainer is installed and VContainer assembly definition is exist
-Убедитесь, что VContainer установлен и assembly VContainer существует в проекте
+Убедитесь, что VContainer или Extenject установлены и их assembly существует в проекте. Пакет автоматически определяет установленный **DI-фреймворк** через versionDefines в asmdef.
 
-## Установка через git URL
-Необходима версия Unity, которая поддерживает query параметры для пакетов git (Unity >= 2019.3.4f1, Unity >= 2020.1a21). 
+1.  __Установка через git URL.__
 
-<img width="422" height="166" alt="image" src="https://github.com/user-attachments/assets/3836a472-1400-47a8-a31d-f162ac41b173" />
+    * Необходима версия Unity, которая поддерживает query параметры для пакетов git (Unity >= 2019.3.4f1, Unity >= 2020.1a21).
+      * Window -> Package Manager;
+      * Необходимо выбрать `Add package from git URL...`;
+      * Используйте `https://github.com/sozooo/game-state-machine.git`.
+      <br>
+      <img width="422" height="166" alt="image" src="https://github.com/user-attachments/assets/3836a472-1400-47a8-a31d-f162ac41b173" />
 
-Нужно добавить `https://github.com/sozooo/game-state-machine.git` в Package Manager
+1.  __Установка через manifest.json.__
 
-<img width="418" height="171" alt="image" src="https://github.com/user-attachments/assets/c4906006-0943-431a-8122-71b95e0058ce" />
+    * Необходимо добавить `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` в `Packages/manifest.json`.
 
-## Установка через manifest
-Добавьте `"com.sozooo.game-state-machine": "https://github.com/sozooo/game-state-machine.git"` в `Packages/manifest.json`
+1.  __Установка через Unity Package.__
 
-## Установка через Unity Package
-Загрузите файл `.unitypackage`последней версии в [Releases](https://github.com/sozooo/game-state-machine/releases) и импортируйте, как обычный пакет Unity в проект
+    * Загрузите файл `.unitypackage` последней версии в [Releases](https://github.com/sozooo/game-state-machine/releases) и импортируйте, как обычный Unity-пакет в проект.
 
 Начало работы
 ---
 
-Перед началом `GameStateMachine` и `StateFactory` классы должны быть зарегистрированы в контейнер через реализуемые интерфейсы (IGameStateMachine)
+Перед началом `GameStateMachine` и `StateFactory` классы должны быть зарегистрированы в контейнер через реализуемые интерфейсы, `Singleton`.
 
+`GameStateMachine` зависит от `StateMachine`, но `StateMachine` можно переиспользовать, как обычную машину состояний для любых существ. Поэтому ее нужно зарегистрировать, как `Transient`:
+
+**VContainer**
 ```csharp
 private void RegisterGameStateMachine(IContainerBuilder builder)
 {
-    builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces();
     builder.Register<StateFactory>(Lifetime.Singleton).AsImplementedInterfaces();
+    builder.Register<StateMachine>(Lifetime.Transient).AsImplementedInterfaces();
+    builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces();
 }
 ```
-
-Также и состояния, в качестве самих себя. Пример:
-
+**Extenject**
 ```csharp
-private void RegisterGameStates(IContainerBuilder builder)
+public override void InstallBindings()
 {
-    builder.Register<BootstrapState>(Lifetime.Singleton).AsSelf();
-    builder.Register<LoadGameSavesState>(Lifetime.Singleton).AsSelf();
-    builder.Register<LoadHomeScreenState>(Lifetime.Singleton).AsSelf();
-    builder.Register<HomeScreenState>(Lifetime.Singleton).AsSelf();
-    
-    builder.Register<LoadBattleState>(Lifetime.Singleton).AsSelf();
-    builder.Register<BattleEnterState>(Lifetime.Singleton).AsSelf();
-    builder.Register<BattleLoopState>(Lifetime.Singleton).AsSelf();
-    
-    builder.Register<GameOverState>(Lifetime.Singleton).AsSelf();
+    Container.BindInterfacesAndSelfTo<StateFactory>().AsSingle();
+    Container.BindInterfacesAndSelfTo<StateMachine>().AsTransient();
+    Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
 }
 ```
+
+_Регистрировать состояния не нужно._ В версии **1.2** и старше создание состояний происходит в `StateFactory` через рефлексию.
 
 Простые состояния
 ---
 
-SimpleState для состояний без загрузки или обработки последнего фрейма перед выходом.
+`SimpleState` для состояний без загрузки или обработки последнего фрейма перед выходом.
 
 ```csharp
 public class SimpleState : IState
@@ -98,7 +95,7 @@ public class SimpleState : IState
 }
 ```
 
-SimplePayloadState для состояний, которые требуют нагрузку (например, состояния которые загружают сцены или режимы).
+`SimplePayloadState` для состояний, которые требуют нагрузку _(например, состояния которые загружают сцены или режимы)_.
 
 ```csharp
 public class SimplePayloadState<TPayload> : IPayloadState<TPayload>
@@ -123,7 +120,7 @@ public class SimplePayloadState<TPayload> : IPayloadState<TPayload>
 }
 ```
 
-EndOfFrameExitState для состояний, которым нужно обработать конец фрейма перед выходом.
+`EndOfFrameExitState` для состояний, которым необходим Update и остановка в конце кадра перед выходом.
 
 ```csharp
 public class EndOfFrameExitState : IState, IUpdateable
@@ -173,12 +170,12 @@ public class EndOfFrameExitState : IState, IUpdateable
         _exitPromise?.Resolve();
 }
 ```
-Можно посмотреть [Примеры](https://github.com/sozooo/game-state-machine/tree/main/Examples~) распространенных состояний и их связей
+Можно посмотреть [Примеры](https://github.com/sozooo/game-state-machine/tree/main/Examples~) распространенных состояний и их связей. Также в папке `1.2` можно посмотреть реализацию патрулирования врага, в котором задействованы дополнительные аргументы для инъекции в состояние.
 
 Смена состояний
 ---
 
-Чтобы сменить состояние `IGameStateMachine` должна быть внедрена в класс. Метод `Enter` может быть вызван из экземпляра машины состояний.
+Чтобы сменить состояние `IStateMachine` должна быть внедрена в класс. Метод `Enter` может быть вызван из экземпляра машины состояний.
 
 ```csharp
 _stateMachine.Enter<ENTER_STATE>();
@@ -192,7 +189,7 @@ _stateMachine.Enter<ENTER_STATE>();
 _stateMachine.Enter<ENTER_PAYLOAD_STATE>(PAYLOAD)
 ```
 
-`GameStateMachine` сделает запрос на вхождение в новое сотояние. Если уже было активное состояние `_activeState`, машина вызовет в нем `IExitableState.BeginExit()` и будет создан `Promise`. Когда `Promise` входа из состояния будет решен (вызовется `Resolve`), машина вызовет `IExitableState.EndExit()` на активном состоянии. После этого будет применено необходимое состояние и у него вызовется метод `Enter`.
+`StateMachine` сделает запрос на вхождение в новое состояние. Если уже было активное состояние `_activeState`, машина вызовет в нем `IExitableState.BeginExit()` и будет создан `Promise`. Когда `Promise` входа из состояния будет решен (вызовется `Resolve`), машина вызовет `IExitableState.EndExit()` на активном состоянии. После этого будет применено необходимое состояние и у него вызовется метод `Enter`.
 
 ```csharp
 public void Enter<TState>() where TState : class, IState =>
@@ -221,5 +218,24 @@ private IPromise<TState> ChangeState<TState>() where TState : class, IExitableSt
     TState state = _stateFactory.GetState<TState>();
 
     return Promise<TState>.Resolved(state);
+}
+```
+Для управления состоянием игры используется Singleton `IGameStateMachine`. Он вызывает внутренний `IStateMachine` и переключает состояния:
+```csharp
+public class GameStateMachine : IGameStateMachine, ITickable
+{
+    private readonly IStateMachine _stateMachine;
+        
+    public GameStateMachine(IStateMachine stateMachine) => 
+        _stateMachine = stateMachine;
+
+    public void Tick() => 
+        _stateMachine.Tick();
+
+    public void Enter<TState>() where TState : class, IState =>
+        _stateMachine.Enter<TState>();
+
+    public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload> =>
+        _stateMachine.Enter<TState, TPayload>(payload);
 }
 ```

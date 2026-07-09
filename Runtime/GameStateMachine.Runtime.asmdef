@@ -2,7 +2,8 @@
     "name": "GameStateMachine.Runtime",
     "rootNamespace": "",
     "references": [
-        "VContainer"
+        "VContainer",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -11,6 +12,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.svermeulen.extenject",
+            "expression": "",
+            "define": "ZENJECT"
+        },
+        {
+            "name": "jp.hadashikick.vcontainer",
+            "expression": "",
+            "define": "VCONTAINER"
+        }
+    ],
     "noEngineReferences": false
 }
